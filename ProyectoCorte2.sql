@@ -1,0 +1,55 @@
+DROP DATABASE IF EXISTS ProyectoCorte2;
+CREATE DATABASE ProyectoCorte2; USE ProyectoCorte2;
+
+CREATE TABLE IF NOT EXISTS ClienteBD (
+ Id_Cliente INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+ Cedula INT NULL,
+ Nombre VARCHAR(45) NULL,
+ Apellido VARCHAR(45) NULL,
+ Nivel INT NULL,
+ Total_compras INT NULL
+);
+
+CREATE TABLE IF NOT EXISTS CotizacionBD (
+ Id_Cotización INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+ Fecha DATE NULL,
+ Id_ClienteFK INT NULL, 
+ FOREIGN KEY (Id_ClienteFK) REFERENCES ClienteBD (Id_Cliente)
+);
+CREATE TABLE IF NOT EXISTS Materia_PrimaBD (
+ Id_Materia_Prima INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+ Ancho INT NULL,
+ Alto INT NULL,
+ Grueso INT NULL,
+ Cantidad INT NULL
+);
+
+CREATE TABLE IF NOT EXISTS EmpleadoBD (
+ Id_Empleado INT PRIMARY KEY NOT NULL,
+ Apellido VARCHAR(45) NULL,
+ Cedula VARCHAR(45) NULL,
+ Nombre VARCHAR(45) NULL,
+ Tipo VARCHAR(45) NULL 
+);
+
+CREATE TABLE IF NOT EXISTS FacturaBD (
+ Id_Factura INT PRIMARY KEY NOT NULL,
+ Total INT NULL,
+ Fecha DATE NULL,
+ Id_EmpleadoFK INT NULL, 
+ FOREIGN KEY (Id_EmpleadoFK) REFERENCES EmpleadoBD (Id_Empleado)
+);
+
+CREATE TABLE IF NOT EXISTS ProductoBD (
+ Id_Producto INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+ Ancho INT NULL,
+ Alto INT NULL,
+ Precio INT NULL,
+ Cantidad INT NULL,
+ Id_CotizacionFK INT NOT NULL,
+ Id_FacturaFK INT NOT NULL, 
+ FOREIGN KEY (Id_CotizacionFK) REFERENCES CotizacionBD (Id_Cotización),
+ FOREIGN KEY (Id_FacturaFK) REFERENCES FacturaBD (Id_Factura) 
+ );
+
+
